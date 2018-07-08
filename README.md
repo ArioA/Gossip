@@ -25,7 +25,7 @@ A `config.ini` MUST be created before the app is run. It should be stored in `sr
 
 #### DATA
 - **directory** - This is the directory where all data will be stored. At the moment, all data is save as a file on disk (not great!).
-- **raw_directory** - This is the directory where raw data will be stored. This is a direct subdirectory of **directory**. An example of raw data might be the html from the BBC Sport website.
+- **raw_directory** - This is the directory where raw data will be stored. This is a direct subdirectory of **directory**. An example of raw data might be the HTML from the BBC Sport website.
 
 #### REMOTE
-- **url** - The URL which is to be scrapped.
+- **url** - The URL which is to be scraped.
