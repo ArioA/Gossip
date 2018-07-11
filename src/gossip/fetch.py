@@ -40,13 +40,19 @@ def ok_status(response):
 def main():
     init_logging()
     logger.info('START')
+    try:
+        run()
+    except Exception as e:
+        logger.exception("Something went wrong!")
+    logger.info('END')
+
+
+def run():
     url = conf['REMOTE']['url']
     resp = get_gossip_raw(url)
     if ok_status(resp):
         save_gossip_raw(resp.text)
-    logger.info('END')
 
 
 if __name__ == '__main__':
     main()
-

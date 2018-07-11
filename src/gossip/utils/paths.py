@@ -16,7 +16,7 @@ def create_file_dir(filepath, is_dir=False):
     else:
         directory = os.path.dirname(filepath)
 
-    os.mkdirs(directory)
+    os.makedirs(directory, exist_ok=True)
 
 
 def get_raw_data_dir():
