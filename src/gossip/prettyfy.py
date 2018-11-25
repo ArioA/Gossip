@@ -1,25 +1,25 @@
 import argparse
 from datetime import date
 
-from bs4 import BeautifulSoup
+import bs4
 
 from gossip.utils import paths
 
 
-def load_downloaded(data_date, am_or_pm='pm'):
+def load_downloaded(data_date: date, am_or_pm: str = 'pm') -> str:
     file_path = paths.get_raw_file_path(data_date, am_or_pm)
     with open(file_path, 'rt') as raw_file:
         raw_html = raw_file.read()
     return raw_html
 
 
-def get_id(raw_html, id_):
-    soup = BeautifulSoup(raw_html, 'html.parser')
+def get_id(raw_html: str, id_: str) -> bs4.ResultSet:
+    soup = bs4.BeautifulSoup(raw_html, 'html.parser')
     return soup.find_all("div", id=id_)
 
 
-def prettify(raw_html):
-    soup = BeautifulSoup(raw_html, 'html.parser')
+def prettify(raw_html: str):
+    soup = bs4.BeautifulSoup(raw_html, 'html.parser')
     print(soup.prettify())
 
 
@@ -44,7 +44,7 @@ def main():
     print_story_body(data_date, args.time_of_day)
 
 
-def print_story_body(data_date, time_of_day):
+def print_story_body(data_date: date, time_of_day: str):
     raw_html = load_downloaded(data_date, time_of_day)
     the_id = get_id(raw_html, "story-body")
     print(the_id[0].prettify())

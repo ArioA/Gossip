@@ -1,24 +1,26 @@
+import datetime
 import logging
 import os
+from typing import Optional, Union
 
 from gossip.config import conf
 
 logger = logging.getLogger(__name__)
 
 
-def create_file_dir(filepath, is_dir=False):
-    if os.path.exists(filepath):
+def create_file_dir(file_path: str, is_dir=False):
+    if os.path.exists(file_path):
         return
 
     if is_dir:
-        directory = filepath
+        directory = file_path
     else:
-        directory = os.path.dirname(filepath)
+        directory = os.path.dirname(file_path)
 
     os.makedirs(directory, exist_ok=True)
 
 
-def get_raw_data_dir():
+def get_raw_data_dir() -> str:
     proj_dir = conf['GENERAL']['project_directory']
     data_dir_name = conf['DATA']['directory']
     raw_dir_name = conf['DATA']['raw_directory']
@@ -27,7 +29,7 @@ def get_raw_data_dir():
     return data_dir
 
 
-def get_raw_file_dir(date):
+def get_raw_file_dir(date: datetime.date) -> str:
     data_dir = get_raw_data_dir()
 
     logger.info(f"Got parent directory {data_dir}")
@@ -38,23 +40,23 @@ def get_raw_file_dir(date):
     return file_dir
 
 
-def build_file_name(date=None, am_or_pm=None):
+def build_file_name(date: Optional[datetime.date] = None, am_or_pm: Optional[str] = None) -> str:
     if am_or_pm:
         prefix = am_or_pm
     else:
         try:
-            if date.hour <= 11:
+            if date.hour < 12:
                 prefix = 'am'
             else:
                 prefix = 'pm'
         except AttributeError:
-            raise ValueError("Must specifiy either am_or_pm, or provide a date with a time")
+            raise ValueError("Must specifiy either `am` or `pm`, or provide a date with a time")
     
     filename = f'{prefix}_gossip.html'
     return filename
 
 
-def get_raw_file_path(date, am_or_pm=None):
+def get_raw_file_path(date: Union[datetime.date, datetime.datetime], am_or_pm: str = None) -> str:
     file_dir = get_raw_file_dir(date)
     logger.info(f"Got file dir {file_dir}")
 
@@ -65,4 +67,3 @@ def get_raw_file_path(date, am_or_pm=None):
     logger.info(f"Got file path: {file_path}")
 
     return file_path
-
