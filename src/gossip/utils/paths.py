@@ -1,8 +1,7 @@
-from datetime import datetime
 import logging
 import os
 
-from config import conf
+from gossip.config import conf
 
 logger = logging.getLogger(__name__)
 
