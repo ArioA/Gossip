@@ -1,4 +1,5 @@
 #!/usr/local/bin/python3
+from argparse import ArgumentParser
 from datetime import datetime
 import logging
 
@@ -37,6 +38,9 @@ def ok_status(response: requests.Response) -> bool:
 
 
 def main():
+    arg_parser = ArgumentParser(description='Store the html from the BBC Sport Football Gossip page locally.')
+    arg_parser.parse_args()
+
     init_logging()
     logger.info('START')
     try:

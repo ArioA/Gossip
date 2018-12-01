@@ -5,6 +5,8 @@ import bs4
 
 from gossip.utils import paths
 
+TIMES_OF_DAY = ['am', 'pm']
+
 
 def load_downloaded(data_date: date, am_or_pm: str = 'pm') -> str:
     file_path = paths.get_raw_file_path(data_date, am_or_pm)
@@ -13,9 +15,9 @@ def load_downloaded(data_date: date, am_or_pm: str = 'pm') -> str:
     return raw_html
 
 
-def get_id(raw_html: str, id_: str) -> bs4.ResultSet:
+def get_id(raw_html: str, tag_id: str) -> bs4.ResultSet:
     soup = bs4.BeautifulSoup(raw_html, 'html.parser')
-    return soup.find_all("div", id=id_)
+    return soup.find_all("div", id=tag_id)
 
 
 def prettify(raw_html: str):
@@ -26,22 +28,29 @@ def prettify(raw_html: str):
 def main():
     parser = argparse.ArgumentParser(description='Print the contents of the BBC Sport Football gossip page')
 
-    parser.add_argument('--year', '-y', nargs='?', default=date.today().year,
-                        type=int, help='The year of the gossip data to prettyfy')
+    today = date.today()
 
-    parser.add_argument('--month', '-m', nargs='?', default=date.today().year,
-                        type=int, help='The month of the gossip data to prettyfy')
+    parser.add_argument('--year', '-y', nargs='?', default=today.year,
+                        type=int, help='The year of the gossip data to prettyfy (default: current year)')
 
-    parser.add_argument('--day', '-d', nargs='?', default=date.today().year,
-                        type=int, help='The day of the gossip data to prettyfy')
+    parser.add_argument('--month', '-m', nargs='?', default=today.month,
+                        type=int, help='The month of the gossip data to prettyfy (default: current month)')
 
-    parser.add_argument('--tod', '-t', nargs='?', default='pm', choices=['am', 'pm'], dest='time_of_day',
-                        help='The time of day of the gossip page.')
+    parser.add_argument('--day', '-d', nargs='?', default=today.day,
+                        type=int, help='The day of the gossip data to prettyfy (default: current day)')
+
+    parser.add_argument('--tod', '-t', nargs='?', default='pm', choices=TIMES_OF_DAY, dest='time_of_day',
+                        help='The time of day of the gossip page (default: pm)')
 
     args = parser.parse_args()
 
     data_date = date(args.year, args.month, args.day)
-    print_story_body(data_date, args.time_of_day)
+
+    try:
+        print_story_body(data_date, args.time_of_day)
+    except FileNotFoundError:
+        time_of_day = set(TIMES_OF_DAY).difference({args.time_of_day}).pop()
+        print_story_body(data_date, time_of_day)
 
 
 def print_story_body(data_date: date, time_of_day: str):

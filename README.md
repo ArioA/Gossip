@@ -1,17 +1,48 @@
-# Gossip (alpha)
+# Gossip 0.0.1
 
 A tool to scrape, store and analyse the contents of the BBC Sport Football Gossip column.
+
+## Usage
+
+
+### Fetch
+Fetch the current gossip page:
+```bash
+gossip_fetch
+```
+
+### Print
+Print the current gossip page:
+```bash
+gossip
+```
+
+Outputs the `story-body` div of the page:
+```html
+<div class="story-body sp-story-body gel-body-copy" id="story-body">
+ <figure class="sp-media-asset ">
+  <div class="sp-media-asset__body media">
+   <div class="sp-media-asset__image gel-responsive-image" style="padding-bottom:31%">
+    <!--[if !lte IE 8 | !IE]><!-->
+    <img alt="Football gossip" class="sp-lazyload" data-sizes="auto" data-src="https://ichef.bbci.co.uk/onesport/cps/{width}{hidpi}/cpsprodpb/522C/production/_102263012_football_gossip_header.png" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
+    <!--<![endif]-->
+    <!--[if lte IE 8]><img src="https://ichef.bbci.co.uk/onesport/cps/160/cpsprodpb/522C/production/_102263012_football_gossip_header.png" class="" /><![endif]-->
+   </div>
+  </div>
+ </figure>
+...
+
+```
 
 ## Installation
 
 Python version >= 3.6
 
-You may need to install some dependencies (e.g. `requests`, `beautifulsoup4`, etc...)
-
-Once you have them all installed, you can leverage this as a regular python package by running:
 
 ```bash
-sudo python3 setup.py install
+cd Gossip
+[sudo] pip3 install -r requirements.txt
+[sudo] python3 setup.py install
 ```
 You will also need to create a `config.ini` file and place it inside `src/gossip/config/` in order for the app to run correctly.
 
