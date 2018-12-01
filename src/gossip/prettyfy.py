@@ -1,8 +1,10 @@
 import argparse
 from datetime import date
+from pprint import pprint
 
 import bs4
 
+from gossip.entities import Paragraph
 from gossip.utils import paths
 
 TIMES_OF_DAY = ['am', 'pm']
@@ -55,8 +57,16 @@ def main():
 
 def print_story_body(data_date: date, time_of_day: str):
     raw_html = load_downloaded(data_date, time_of_day)
-    the_id = get_id(raw_html, "story-body")
-    print(the_id[0].prettify())
+    the_id = get_id(raw_html, "story-body")[0]
+
+    pars = the_id.find_all('p')
+
+    for par in pars:
+        para = Paragraph(par)
+        if para:
+            print(para.build_paragraph(True))
+            print()
+    #print(the_id.prettify())
 
 
 if __name__ == '__main__':
