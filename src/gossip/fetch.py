@@ -12,7 +12,7 @@ from gossip.utils import paths
 logger = logging.getLogger(__name__)
 
 
-def get_gossip_raw(url: str) -> requests.Response:
+def get_gossip_raw_response(url: str = conf['REMOTE']['url']) -> requests.Response:
     logger.info(f"Sending request to {url}")
     resp = requests.get(url)
     logger.info(f"Got response with status={resp.status_code}, length={len(resp.text)}")
@@ -51,8 +51,7 @@ def main():
 
 
 def run():
-    url = conf['REMOTE']['url']
-    resp = get_gossip_raw(url)
+    resp = get_gossip_raw_response()
     if ok_status(resp):
         save_gossip_raw(resp.text)
 

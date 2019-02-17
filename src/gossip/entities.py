@@ -51,16 +51,16 @@ class Paragraph:
         self.parse_element(first_element)
 
         for sibling in first_element.next_siblings:
-            if isinstance(sibling, element.NavigableString) or sibling.name == 'b':
+            if self.is_plaintext(sibling) or self.is_bold(sibling):
                 self.parse_element(sibling)
 
     def parse_element(self, paragraph_element: Union[element.NavigableString, element.Tag]):
         term = None
 
-        if isinstance(paragraph_element, element.NavigableString):
+        if self.is_plaintext(paragraph_element):
             self.plain_terms.append(str(paragraph_element))
             term = TermType.plain
-        elif isinstance(paragraph_element, element.Tag) and paragraph_element.name == 'b':
+        elif self.is_bold(paragraph_element):
             bold_string = str(paragraph_element.string)
             self.bold_terms.append(bold_string)
             term = TermType.bold
@@ -69,6 +69,12 @@ class Paragraph:
 
         if term is not None:
             self.term_ordering.append(term)
+
+    def is_bold(self, paragraph_element: Union[element.NavigableString, element.Tag]):
+        return isinstance(paragraph_element, element.Tag) and paragraph_element.name == 'b'
+
+    def is_plaintext(self, paragraph_element: Union[element.NavigableString, element.Tag]):
+        return isinstance(paragraph_element, element.NavigableString)
 
     def build_paragraph_words(self, show_bold=False):
         bold_terms = deque(self.bold_terms)

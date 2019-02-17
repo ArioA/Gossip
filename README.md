@@ -12,27 +12,54 @@ gossip_fetch
 ```
 
 ### Print
-Print the current gossip page:
+Print the stories on the current gossip page:
 ```bash
 gossip
 ```
 
-Outputs the `story-body` div of the page:
+Outputs the stories on the page:
+```text
+*Chelsea *are keen on signing* Inter Milan's *Argentina striker Mauro Icardi, after *Real Madrid* cooled their interest. The 25-year-old was recently stripped of the captaincy at the Italian club. 
+
+*Real *will target *Paris St-Germain's* 27-year-old Brazil forward Neymar this summer, which could rule out a move for *Chelsea *and Belgium playmaker Eden Hazard, 28.
+
+*Manchester United* want *Juventus'* 25-year-old Argentina forward Paulo Dybala and will offer the Serie A leaders Belgium striker Romelu Lukaku, 25, as part of the deal. 
+
+...
+```
+
+You can view the pretty-printed HTML of the page with the `-r` option:
+
+```bash
+gossip -r
+```
+Outputs:
+
 ```html
-<div class="story-body sp-story-body gel-body-copy" id="story-body">
- <figure class="sp-media-asset ">
-  <div class="sp-media-asset__body media">
-   <div class="sp-media-asset__image gel-responsive-image" style="padding-bottom:31%">
-    <!--[if !lte IE 8 | !IE]><!-->
-    <img alt="Football gossip" class="sp-lazyload" data-sizes="auto" data-src="https://ichef.bbci.co.uk/onesport/cps/{width}{hidpi}/cpsprodpb/522C/production/_102263012_football_gossip_header.png" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
-    <!--<![endif]-->
-    <!--[if lte IE 8]><img src="https://ichef.bbci.co.uk/onesport/cps/160/cpsprodpb/522C/production/_102263012_football_gossip_header.png" class="" /><![endif]-->
-   </div>
-  </div>
- </figure>
+<!DOCTYPE html>
+<html class="b-reith-sans-font no-js no-enhanced no-touch no-font-face no-av no-app no-csscolumns no-css-transitions no-css-2d-transforms no-flexbox no-svg" id="sport-html" lang="en-gb">
+ <head>
+  <title>
+   Football gossip: Icardi, Neymar, Dybala, De Gea, Felix, Saiss - BBC Sport
+  </title>
+  <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+  <meta content="Chelsea interested in Inter striker Icardi, Manchester United want Dybala, Real make Neymar summer target, plus more." name="description"/>
+  <meta content="" name="keywords"/>
+  <meta content="BBC Sport" property="og:site_name"/>
+  <meta content="2019/02/17 8:10:53" property="rnews:datePublished"/>
+  <meta charset="utf-8"/>
+  <link href="https://www.bbc.co.uk/sport/football/gossip" rel="canonical"/>
+  <link href="android-app://uk.co.bbc.android.sportdomestic/https/www.bbc.co.uk/sport/football/gossip" rel="alternate"/>
 ...
 
 ```
+
+Running
+```bash
+gossip --help
+```
+
+Gives you more info on the available options.
 
 ## Installation
 
